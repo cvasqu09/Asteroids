@@ -74,8 +74,6 @@ public class MainMenu extends GameState{
 
     @Override
     public void draw() {
-
-
         float titleXLocation = 280;
         float titleYLocation = 350;
         randomAsteroids.draw();

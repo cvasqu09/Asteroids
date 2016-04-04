@@ -149,7 +149,11 @@ public class PlayState extends GameState{
 
     @Override
     public void update(float dt) {
-        if(numAsteroidsLeft == 0){
+        if (player.getExtraLives() == 0){
+            gsm.setState(GameStateManager.GAMEOVER);
+        }
+
+        if (numAsteroidsLeft == 0) {
             newLevel();
         }
 
@@ -223,5 +227,8 @@ public class PlayState extends GameState{
     @Override
     public void dispose() {
         batch.dispose();
+        font.dispose();
+        shapeRenderer.dispose();
+
     }
 }

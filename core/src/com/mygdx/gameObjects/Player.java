@@ -38,7 +38,7 @@ public class Player extends SpaceObject {
     private float explosionTimer = 3.0f;
 
     //Lives and player score
-    private long playerScore;
+    private static long playerScore;
     private int extraLives;
     private long extraLifeScore;
 
@@ -176,53 +176,77 @@ public class Player extends SpaceObject {
     }
 
     private void respawn(){
+        System.out.println("Entering respawn function.");
         if(extraLives > 0){
             removeLife();
             x = Game.WIDTH / 2;
             y = Game.HEIGHT / 2;
-
-            dx = 0;
-            dy = 0;
 
             //Pixels per second
             maxSpeed = 300;
             acceleration = 200;
             deceleration = 10;
 
-            while(hit){
+            shapex = new float[4];
+            shapey = new float[4];
+
+            //Start facing up
+            radians = 3.1415f / 2;
+            rotationSpeed = 3.0f;
+
+            flamex = new float[3];
+            flamey = new float[3];
+
+            leftDebris = new Debris();
+            rightDebris = new Debris();
+            bottomDebris = new Debris();
+
+            dx = 0.0f;
+            dy = 0.0f;
+
+            explosionTime = 0.0f;
+            explosionTimer = 3.0f;
+
+            while(hit == true) {
                 hit = false;
-                for(int i = 0; i < asteroids.size(); i++){
+                for (int i = 0; i < asteroids.size(); i++) {
                     checkShipCollision(asteroids.get(i));
                 }
             }
 
-            System.out.println("!Dead");
             dead = false;
-        } else {
-            //FIXME: Transition into gameOverState
+            setShape();
+
         }
 
     }
 
     public void update(float dt) {
         //If hit
+        //System.out.println(hit);
+
+        //Debugging
+        //System.out.println("explosion time: " + explosionTime);
+        //System.out.println("exp timer: " + explosionTimer);
         if(hit){
-            System.out.println("hit update");
+            //System.out.println("hit update");
+
             //Create ship debris for when the ship is hit
             if(explosionTime <= explosionTimer) {
-                System.out.println("exp time: " + explosionTime);
-                System.out.println("x: " + leftDebris.shapex[0]);
-                System.out.println("y: " + leftDebris.shapey[0]);
+                //Debugging
+                //System.out.println("exp time: " + explosionTime);
+                //System.out.println("x: " + leftDebris.shapex[0]);
+                //System.out.println("y: " + leftDebris.shapey[0]);
 
                 explosionTime += dt;
                 explode(dt);
             } else {
-                System.out.println("In respawn");
+                //System.out.println("In respawn");
                 explosionTimer = 0;
                 respawn();
-                System.out.println("Exiting respawn");
+                //System.out.println("Exiting respawn");
             }
-            System.out.println("Exiting hit update");
+            //System.out.println("Exiting hit update");
         } else {
             //Turning
             if(left){
@@ -279,20 +303,20 @@ public class Player extends SpaceObject {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
         if(hit){
-            System.out.println("Hit draw");
+            //System.out.println("Hit draw");
             dead = true;
             if(explosionTime <= explosionTimer) {
+                //System.out.println("exploding");
                 leftDebris.draw(shapeRenderer);
                 rightDebris.draw(shapeRenderer);
                 bottomDebris.draw(shapeRenderer);
             }
-            System.out.println("Exiting hit draw");
+            //System.out.println("Exiting hit draw");
         }
 
         if(!dead){
             //Draw ship
             //Draw a line from each point to the next point in the shape arrays.
-            System.out.println("Drawing ship");
             for(int i = 0; i <= shapex.length - 1; i++){
                 int j;
                 if(i == shapex.length - 1){
@@ -321,7 +345,7 @@ public class Player extends SpaceObject {
         shapeRenderer.end();
     }
 
-    public long getPlayerScore(){
+    public static long getPlayerScore(){
         return playerScore;
     }
 

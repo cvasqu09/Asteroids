@@ -1,5 +1,6 @@
 package com.mygdx.processors;
 
+import com.mygdx.states.GameOverState;
 import com.mygdx.states.GameState;
 import com.mygdx.states.MainMenu;
 import com.mygdx.states.PlayState;
@@ -15,6 +16,7 @@ public class GameStateManager {
     public static final int SETTINGS = 2;
     public static final int HIGHSCORES = 1;
     public static final int SECRET = 666593;
+    public static final int GAMEOVER = 5;
 
     public GameStateManager(){
         setState(MAINMENU);
@@ -44,6 +46,10 @@ public class GameStateManager {
 
         if(state == SECRET){
             gameState = new SecretState(this);
+        }
+
+        if(state == GAMEOVER){
+            gameState = new GameOverState(this);
         }
     }
 
