@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.states.SettingsState;
 
-/**
- * Created by Chris on 2/28/2016.
- */
 public class Bullet extends SpaceObject {
     //Determine how long a bullet has been on the screen and how long it can stay
     private float lifeTime;
@@ -26,6 +23,16 @@ public class Bullet extends SpaceObject {
         width = height = 2;
         lifeTimer = 1;
         lifeTime = 0;
+    }
+
+    public Bullet(){
+        //Set bullet offscreen just in case of collision
+        this.x = 1000;
+        this.y = 1000;
+        speed = 350;
+        width = height = 2;
+        lifeTimer = 1;
+        lifeTimer = 0;
     }
 
     public boolean shouldRemove(){
@@ -58,6 +65,18 @@ public class Bullet extends SpaceObject {
             return true;
         }
         return false;
+    }
+
+    public void setX(float x){
+        this.x = x;
+    }
+
+    public void setY(float y){
+        this.y = y;
+    }
+
+    public void setRadians(float radians){
+        this.radians = radians;
     }
 
 

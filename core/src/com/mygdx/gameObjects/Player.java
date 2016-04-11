@@ -169,6 +169,23 @@ public class Player extends SpaceObject {
         }
     }
 
+    public void checkBulletCollision(Bullet saucerBullet){
+        if(Math.abs(shapex[0] - saucerBullet.getX()) <= saucerBullet.width / 2 &&
+                Math.abs(shapey[0] - saucerBullet.getY()) <= saucerBullet.height / 2){
+            hit = true;
+        }
+
+        if(Math.abs(shapex[1] - saucerBullet.getX()) <= saucerBullet.width / 2 &&
+                Math.abs(shapey[1] - saucerBullet.getY()) <= saucerBullet.height / 2){
+            hit = true;
+        }
+
+        if(Math.abs(shapex[3] - saucerBullet.getX()) <= saucerBullet.width / 2 &&
+                Math.abs(shapey[3] - saucerBullet.getY()) <= saucerBullet.height / 2){
+            hit = true;
+        }
+    }
+
     private void explode(float dt){
         leftDebris.update(dt);
         rightDebris.update(dt);
@@ -207,7 +224,7 @@ public class Player extends SpaceObject {
             explosionTime = 0.0f;
             explosionTimer = 3.0f;
 
-            while(hit == true) {
+            while(hit) {
                 hit = false;
                 for (int i = 0; i < asteroids.size(); i++) {
                     checkShipCollision(asteroids.get(i));

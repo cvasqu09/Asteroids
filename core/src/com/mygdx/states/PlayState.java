@@ -11,6 +11,7 @@ import com.mygdx.game.Game;
 import com.mygdx.gameObjects.Asteroid;
 import com.mygdx.gameObjects.Bullet;
 import com.mygdx.gameObjects.Player;
+import com.mygdx.gameObjects.Saucer;
 import com.mygdx.processors.GameKeys;
 import com.mygdx.processors.GameStateManager;
 
@@ -28,6 +29,7 @@ public class PlayState extends GameState{
     private int level;
     private int totalAsteroids;
     private int numAsteroidsLeft;
+    private Saucer saucer;
 
     //Adding music
     Music backgroundMusic;
@@ -54,7 +56,7 @@ public class PlayState extends GameState{
         asteroids = new ArrayList<Asteroid>();
 
         player = new Player(bullets);
-
+        saucer = new Saucer(0, MathUtils.random(350, 450), player);
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Throne.mp3"));
         backgroundMusic.setLooping(true);
@@ -91,6 +93,8 @@ public class PlayState extends GameState{
             }
             break;
         }
+
+        //
     }
 
     private void spawnAsteroids(){
@@ -185,6 +189,11 @@ public class PlayState extends GameState{
             }
         }
 
+        //Check bullet collision
+        player.checkBulletCollision(saucer.getBullet());
+
+        saucer.update(dt);
+
         //Check bullet collisions
         checkBulletCollisions();
 
@@ -192,6 +201,7 @@ public class PlayState extends GameState{
 
     @Override
     public void draw() {
+        saucer.draw();
         //Draw player
         player.draw(shapeRenderer);
 

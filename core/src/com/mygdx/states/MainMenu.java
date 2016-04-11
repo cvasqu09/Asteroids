@@ -17,9 +17,6 @@ import com.mygdx.processors.GameStateManager;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Chris on 3/2/2016.
- */
 public class MainMenu extends GameState{
     private SpriteBatch batch;
     private BitmapFont titleFont;
@@ -78,8 +75,7 @@ public class MainMenu extends GameState{
         float titleYLocation = 350;
         randomAsteroids.draw();
         //Debugging for the saucer
-        //saucer.draw();
-
+        saucer.draw();
         batch.begin();
         titleFont.draw(batch, title, titleXLocation, titleYLocation);
 
